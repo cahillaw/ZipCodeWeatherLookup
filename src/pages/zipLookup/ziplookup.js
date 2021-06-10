@@ -2,40 +2,18 @@ import React, { useState } from "react"
 
 import SearchBar from "material-ui-search-bar";
 import { Grid, Paper } from "@material-ui/core";
+import { getWeatherByZip, kelvinToFahrenheit } from "./zipLookupFunctions"
 
 import { makeStyles } from "@material-ui/core/styles";
 import styles from "./zipLookupStyle";
 const useStyles = makeStyles(styles);
 
-const ZipLookup = () => {
+const SETTINGS = require("../../settings.json");
+
+function ZipLookup() {
     const classes = useStyles();
-    const [zipCode, setZipCode] = useState('')
-    const [data, setData] = useState([])
+    const [data, setData] = useState(null)
     const [iconURL, setIconURL] = useState('')
-
-    
-    const getWeatherByZip = (zipCode, countryCode, apiKey) => {
-        var url = "https://api.openweathermap.org/data/2.5/weather?zip=" + zipCode + "," + countryCode + "&appid=" + apiKey
-        fetch(url, {
-          method: 'get'
-        })
-        .then((response) => {
-          if (response.status === 200) {
-            response.json().then((data) => {
-              console.log(data)
-              setData(data)
-              setIconURL("http://openweathermap.org/img/w/" + data.weather[0].icon + ".png")
-            })
-          } else {
-            console.log("failed :(")
-            alert("failed")
-          }
-        })        
-    }
-
-    function kelvinToFahrenheit(tempKelvin) {
-        return Math.round((tempKelvin - 273.15)*(9/5) + 32)
-    }
 
     return (
         <Grid container direction = "column" className={classes.container}>
@@ -43,15 +21,24 @@ const ZipLookup = () => {
                 <h1>ZipCode Weather Lookup</h1>
             </Grid>
             <Grid item xs = {12}>
-                <SearchBar
+                <SearchBar 
                     placeholder="Search for a ZipCode..."
-                    value={zipCode}
-                    onChange={(newValue) => setZipCode(newValue)}
-                    onRequestSearch={(newValue) => getWeatherByZip(newValue,"us","6943dd3c502c8cff737d78bb517686c2")}
+                    onRequestSearch={(newValue) => {
+                        let result = getWeatherByZip(newValue,"US",SETTINGS.api_key)
+                        result.then((res) => {
+                            if(res.code !== 200) {
+                                alert(res.data)
+                            } else {
+                                setData(res.data)
+                                setIconURL("http://openweathermap.org/img/w/" + res.data.weather[0].icon + ".png")
+                            }
+                        })
+                    }}
                     className={classes.searchBar}
+                    inputProps={{ "data-testid": "searchbar" }}
                 />
             </Grid>
-            {data.length !== 0 ? 
+            {data !== null ? //if there is no data, do not render the weather info
                 <Grid item xs={12} className={classes.weatherContent}>
                     <Paper>
                         <Grid container direction ="row">
@@ -77,7 +64,8 @@ const ZipLookup = () => {
             : null }
         </Grid>
     )        
-    
+
 }
+
 
 export default ZipLookup

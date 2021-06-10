@@ -1,6 +1,6 @@
 import './App.css';
 
-import ZipLookup from './pages/ziplookup';
+import ZipLookup from './pages/zipLookup/ziplookup';
 
 function App() {
   return (

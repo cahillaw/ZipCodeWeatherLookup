@@ -1,8 +1,13 @@
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import App from './App';
+import ZipLookup from './pages/zipLookup/ziplookup';
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
-});
+test('App loads', () => {
+  const { getByText } = render(<App/>)
+  getByText("ZipCode Weather Lookup")
+})
+
+test('ZipCode Lookup component loads', () => {
+  const { getByText } = render(<ZipLookup/>)
+  getByText("ZipCode Weather Lookup")
+})
