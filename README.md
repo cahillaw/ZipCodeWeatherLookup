@@ -15,7 +15,7 @@ Next, navigate into the application:
 
 `cd ZipCodeWeatherLookup`
 
-After cloning the repo, you will need to add your OpenWeatherMap API key to the `api_key` field in the `settings.json` in the `src` directory. To get an API key, sign up and register an API key at OpenWeatherMap [here](https://home.openweathermap.org/users/sign_up).
+Finally, you will need to add your OpenWeatherMap API key to the `api_key` field in the `settings.json` in the `src` directory. To get an API key, sign up and register an API key at OpenWeatherMap [here](https://home.openweathermap.org/users/sign_up).
 
 Once you have cloned the repo, use `npm install` to install the needed dependencies, and then use `npm start` to start the application. 
 
