@@ -2,12 +2,13 @@ export async function getWeatherByZip(zipCode, countryCode, apiKey) {
     const response = await fetch("https://api.openweathermap.org/data/2.5/weather?zip=" + zipCode + "," + countryCode + "&appid=" + apiKey);
     if (response.status === 200) {
         const data = await response.json()
+
         return {
             code: response.status,
             data: data
         }
     } else {
-        let errorMessage = "Request failed, error code " + response.status
+        let errorMessage = "Request failed, error code " + response.status //default case, is overwritten if on the next cases are true
         if (response.status === 404) {
             errorMessage = "No " + countryCode + " Zip Code for " + zipCode
           } else if (apiKey === "") {
@@ -18,7 +19,7 @@ export async function getWeatherByZip(zipCode, countryCode, apiKey) {
 
           return {
               code: response.status,
-              data: errorMessage
+              data: errorMessage //error message replaces data, using the same return format for consistency.
           }
     }
 
