@@ -7,9 +7,13 @@ ZipCode Weather Lookup is a web application that allows users to lookup weather 
 ![ZipCode Weather Lookup](https://raw.githubusercontent.com/cahillaw/ZipCodeWeatherLookup/master/public/weatherlookup.PNG)
 
 ## Installation 
-To run this application, first clone the repo with the following command
+To run this application, first clone the repo with the following command:
 
 `git clone https://github.com/cahillaw/ZipCodeWeatherLookup.git`
+
+Next, navigate into the application:
+
+`cd ZipCodeWeatherLookup`
 
 After cloning the repo, you will need to add your OpenWeatherMap API key to the `api_key` field in the `settings.json` in the `src` directory. To get an API key, sign up and register an API key at OpenWeatherMap [here](https://home.openweathermap.org/users/sign_up).
 
